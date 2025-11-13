@@ -133,8 +133,8 @@ export function HeroTrust() {
   return (
     <>
       {/* Hero Photos */}
-      <section className="pt-16 md:pt-20">
-        <div className="relative h-[380px] md:h-[560px] overflow-hidden">
+      <section className="pt-16 md:pt-20" aria-label="Hero image carousel">
+        <div className="relative h-[380px] md:h-[560px] overflow-hidden" role="img" aria-label="Professional HVAC installation images">
           {backgroundImages.map((image, index) => (
             <div
               key={index}
@@ -143,11 +143,13 @@ export function HeroTrust() {
                   ? "opacity-100"
                   : "opacity-0"
               }`}
+              aria-hidden={index !== currentImageIndex}
             >
               <img
                 src={image}
-                alt={`Davis Heating + Air installation ${index + 1}`}
+                alt={`Professional HVAC installation by Davis Heating + Air - ${index === 0 ? 'Gree indoor air handler installation' : index === 1 ? 'Gree outdoor dual fan system installation' : 'Indoor component installation'}`}
                 className="w-full h-full object-cover"
+                loading={index === 0 ? "eager" : "lazy"}
               />
             </div>
           ))}
@@ -155,14 +157,14 @@ export function HeroTrust() {
       </section>
 
       {/* Main Headline and CTA Section */}
-      <section className="bg-white py-8 md:py-12">
+      <section className="bg-white py-8 md:py-12" aria-labelledby="main-headline">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto">
-            <p className="mb-4 text-[#1e3a5f] text-lg md:text-xl">
+            <p className="mb-4 text-[#1e3a5f] text-lg md:text-xl" role="text">
               Let's make HVAC great again!
             </p>
 
-            <h1 className="mb-4 text-[#1e3a5f]">
+            <h1 id="main-headline" className="mb-4 text-[#1e3a5f]">
               Professional HVAC Services for Northwest North
               Carolina
             </h1>
@@ -206,10 +208,10 @@ export function HeroTrust() {
       </section>
 
       {/* Trust Factors - Blue Background */}
-      <section className="py-16 bg-[#1e3a5f]">
+      <section className="py-16 bg-[#1e3a5f]" aria-labelledby="trust-factors-heading">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="mb-4 text-white">
+            <h2 id="trust-factors-heading" className="mb-4 text-white">
               Why Homeowners Trust Davis Heating + Air
             </h2>
             <p className="max-w-2xl mx-auto text-white/90">
@@ -243,14 +245,14 @@ export function HeroTrust() {
       </section>
 
       {/* Customer Testimonials */}
-      <section className="bg-white py-12 md:py-12">
+      <section className="bg-white py-12 md:py-12" aria-labelledby="testimonials-heading">
         <div className="container mx-auto px-4">
           <div>
             <div className="text-center mb-10">
-              <h1 className="max-w-2xl mx-auto text-[#1e3a5f] text-xl">
+              <h2 id="testimonials-heading" className="max-w-2xl mx-auto text-[#1e3a5f] text-xl">
                 Don't just take our word for it - hear from
                 homeowners throughout Northwest North Carolina
-              </h1>
+              </h2>
             </div>
 
             <div className="text-center mb-6">

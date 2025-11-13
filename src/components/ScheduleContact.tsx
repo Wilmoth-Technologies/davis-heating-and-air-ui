@@ -6,7 +6,7 @@ import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Calendar, Mail, Phone, MapPin, Clock } from 'lucide-react';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 export function ScheduleContact() {
   const [scheduleForm, setScheduleForm] = useState({
@@ -56,10 +56,10 @@ export function ScheduleContact() {
   };
 
   return (
-    <section className="py-12 md:py-12 bg-white">
+    <section id="schedule" className="py-12 md:py-12 bg-white" aria-labelledby="schedule-heading">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="mb-4 text-[#1e3a5f] text-xl">Schedule Service or Contact Us Today!</h2>
+          <h2 id="schedule-heading" className="mb-4 text-[#1e3a5f] text-xl">Schedule Service or Contact Us Today!</h2>
           <p className="max-w-2xl mx-auto text-gray-600">
             Ready to get started? Fill out the form below and we'll get back to you as soon as possible.
           </p>
@@ -67,9 +67,9 @@ export function ScheduleContact() {
         
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Schedule Service */}
-          <Card id="schedule" className="border-2 border-[#1e3a5f]">
+          <Card className="border-2 border-[#1e3a5f]">
             <CardHeader>
-              <div className="w-12 h-12 bg-[#1e3a5f] rounded-lg flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-[#1e3a5f] rounded-lg flex items-center justify-center mb-4" aria-hidden="true">
                 <Calendar className="h-6 w-6 text-white" />
               </div>
               <CardTitle>Schedule Service</CardTitle>
@@ -78,16 +78,19 @@ export function ScheduleContact() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleScheduleSubmit} className="space-y-4">
+              <form onSubmit={handleScheduleSubmit} className="space-y-4" aria-label="Schedule service appointment form">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="schedule-name">Name *</Label>
                     <Input
                       id="schedule-name"
+                      type="text"
                       required
                       value={scheduleForm.name}
                       onChange={(e) => setScheduleForm({ ...scheduleForm, name: e.target.value })}
                       placeholder="Your name"
+                      aria-required="true"
+                      autoComplete="name"
                     />
                   </div>
                   <div className="space-y-2">
@@ -99,20 +102,24 @@ export function ScheduleContact() {
                       value={scheduleForm.phone}
                       onChange={(e) => setScheduleForm({ ...scheduleForm, phone: e.target.value })}
                       placeholder="(555) 123-4567"
+                      aria-required="true"
+                      autoComplete="tel"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="schedule-email">Email *</Label>
-                  <Input
-                    id="schedule-email"
-                    type="email"
-                    required
-                    value={scheduleForm.email}
-                    onChange={(e) => setScheduleForm({ ...scheduleForm, email: e.target.value })}
-                    placeholder="your@email.com"
-                  />
+                    <Input
+                      id="schedule-email"
+                      type="email"
+                      required
+                      value={scheduleForm.email}
+                      onChange={(e) => setScheduleForm({ ...scheduleForm, email: e.target.value })}
+                      placeholder="your@email.com"
+                      aria-required="true"
+                      autoComplete="email"
+                    />
                 </div>
 
                 <div className="space-y-2">
@@ -122,7 +129,7 @@ export function ScheduleContact() {
                     onValueChange={(value) => setScheduleForm({ ...scheduleForm, service: value })}
                     required
                   >
-                    <SelectTrigger id="schedule-service">
+                    <SelectTrigger id="schedule-service" aria-required="true" aria-label="Select service type">
                       <SelectValue placeholder="Select a service" />
                     </SelectTrigger>
                     <SelectContent>
@@ -151,9 +158,9 @@ export function ScheduleContact() {
                       value={scheduleForm.time}
                       onValueChange={(value) => setScheduleForm({ ...scheduleForm, time: value })}
                     >
-                      <SelectTrigger id="schedule-time">
-                        <SelectValue placeholder="Select time" />
-                      </SelectTrigger>
+                    <SelectTrigger id="schedule-time" aria-label="Select preferred time">
+                      <SelectValue placeholder="Select time" />
+                    </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="morning">Morning (8am - 12pm)</SelectItem>
                         <SelectItem value="afternoon">Afternoon (12pm - 4pm)</SelectItem>
@@ -176,16 +183,17 @@ export function ScheduleContact() {
 
                 <div className="space-y-2">
                   <Label htmlFor="schedule-message">Additional Details</Label>
-                  <Textarea
-                    id="schedule-message"
-                    value={scheduleForm.message}
-                    onChange={(e) => setScheduleForm({ ...scheduleForm, message: e.target.value })}
-                    placeholder="Tell us more about what you need..."
-                    rows={3}
-                  />
+                    <Textarea
+                      id="schedule-message"
+                      value={scheduleForm.message}
+                      onChange={(e) => setScheduleForm({ ...scheduleForm, message: e.target.value })}
+                      placeholder="Tell us more about what you need..."
+                      rows={3}
+                      aria-label="Additional details about your service request"
+                    />
                 </div>
 
-                <Button type="submit" className="w-full bg-[#1e3a5f] hover:bg-[#2d5280]">
+                <Button type="submit" className="w-full bg-[#1e3a5f] hover:bg-[#2d5280]" aria-label="Submit service appointment request">
                   Request Appointment
                 </Button>
               </form>
@@ -194,26 +202,29 @@ export function ScheduleContact() {
 
           {/* Contact Form */}
           <div className="space-y-8">
-            <Card id="contact">
+            <Card id="contact" aria-labelledby="contact-heading">
               <CardHeader>
-                <div className="w-12 h-12 bg-[#ff6b5a] rounded-lg flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-[#ff6b5a] rounded-lg flex items-center justify-center mb-4" aria-hidden="true">
                   <Mail className="h-6 w-6 text-white" />
                 </div>
-                <CardTitle>Contact Us</CardTitle>
+                <CardTitle id="contact-heading">Contact Us</CardTitle>
                 <CardDescription>
                   Have questions? We're here to help!
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleContactSubmit} className="space-y-4">
+                <form onSubmit={handleContactSubmit} className="space-y-4" aria-label="Contact form">
                   <div className="space-y-2">
                     <Label htmlFor="contact-name">Name *</Label>
                     <Input
                       id="contact-name"
+                      type="text"
                       required
                       value={contactForm.name}
                       onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
                       placeholder="Your name"
+                      aria-required="true"
+                      autoComplete="name"
                     />
                   </div>
 
@@ -227,6 +238,8 @@ export function ScheduleContact() {
                         value={contactForm.email}
                         onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
                         placeholder="your@email.com"
+                        aria-required="true"
+                        autoComplete="email"
                       />
                     </div>
                     <div className="space-y-2">
@@ -237,6 +250,7 @@ export function ScheduleContact() {
                         value={contactForm.phone}
                         onChange={(e) => setContactForm({ ...contactForm, phone: e.target.value })}
                         placeholder="(555) 123-4567"
+                        autoComplete="tel"
                       />
                     </div>
                   </div>
@@ -245,10 +259,12 @@ export function ScheduleContact() {
                     <Label htmlFor="contact-subject">Subject *</Label>
                     <Input
                       id="contact-subject"
+                      type="text"
                       required
                       value={contactForm.subject}
                       onChange={(e) => setContactForm({ ...contactForm, subject: e.target.value })}
                       placeholder="What can we help you with?"
+                      aria-required="true"
                     />
                   </div>
 
@@ -261,10 +277,11 @@ export function ScheduleContact() {
                       onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
                       placeholder="Your message..."
                       rows={4}
+                      aria-required="true"
                     />
                   </div>
 
-                  <Button type="submit" className="w-full bg-[#ff6b5a] hover:bg-[#ff5544]">
+                  <Button type="submit" className="w-full bg-[#ff6b5a] hover:bg-[#ff5544]" aria-label="Submit contact form">
                     Send Message
                   </Button>
                 </form>

@@ -48,10 +48,10 @@ const services = [
 
 export function Services() {
   return (
-    <section id="services" className="py-12 md:py-12 bg-[#1e3a5f]">
+    <section id="services" className="py-12 md:py-12 bg-[#1e3a5f]" aria-labelledby="services-heading">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="mb-4 text-white text-xl">Our Services</h2>
+          <h2 id="services-heading" className="mb-4 text-white text-xl">Our Services</h2>
           <p className="max-w-2xl mx-auto text-white/90">
             Comprehensive HVAC solutions for residential and commercial properties in Northwest North Carolina
           </p>

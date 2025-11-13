@@ -12,10 +12,10 @@ const brands = [
 
 export function Brands() {
   return (
-    <section id="brands" className="py-12 md:py-12 bg-[#1e3a5f]">
+    <section id="brands" className="py-12 md:py-12 bg-[#1e3a5f]" aria-labelledby="brands-heading">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="mb-4 text-white text-xl">Premium Brands We Install</h2>
+          <h2 id="brands-heading" className="mb-4 text-white text-xl">Premium Brands We Install</h2>
           <p className="max-w-2xl mx-auto text-white/90">
             We partner with industry-leading manufacturers to bring you the best in heating and cooling technology
           </p>
@@ -43,8 +43,9 @@ export function Brands() {
                 <div className="h-48 relative flex items-center justify-center bg-white p-8">
                   <ImageWithFallback
                     src={brand.image}
-                    alt={`${brand.name} HVAC systems`}
+                    alt={`${brand.name} HVAC brand logo - ${brand.featured ? 'Featured partner' : 'Available brand'}`}
                     className="max-w-full max-h-full object-contain"
+                    loading="lazy"
                   />
                 </div>
                 <div className="bg-gray-50 py-4 text-center border-t border-gray-200">

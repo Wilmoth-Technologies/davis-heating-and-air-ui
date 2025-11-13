@@ -27,14 +27,14 @@ const projects = [
 
 export function Portfolio() {
   return (
-    <section id="portfolio" className="py-12 md:py-12 bg-white">
+    <section id="portfolio" className="py-12 md:py-12 bg-white" aria-labelledby="portfolio-heading">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-[#1e3a5f]/10 px-4 py-2 rounded-full mb-4">
-            <CheckCircle className="h-5 w-5 text-[#1e3a5f]" />
+          <div className="inline-flex items-center gap-2 bg-[#1e3a5f]/10 px-4 py-2 rounded-full mb-4" aria-label="Portfolio badge">
+            <CheckCircle className="h-5 w-5 text-[#1e3a5f]" aria-hidden="true" />
             <span className="text-[#1e3a5f]">See Our Work</span>
           </div>
-          <h2 className="mb-4">Recent Projects & Installations</h2>
+          <h2 id="portfolio-heading" className="mb-4">Recent Projects & Installations</h2>
           <p className="max-w-2xl mx-auto text-gray-600">
             Quality craftsmanship and attention to detail in every installation. 
             See examples of our professional HVAC work throughout Northwest North Carolina.
@@ -47,8 +47,9 @@ export function Portfolio() {
               <div className="relative h-64 overflow-hidden bg-gray-100">
                 <img
                   src={project.image}
-                  alt={project.title}
+                  alt={`${project.title} - ${project.description} by Davis Heating + Air`}
                   className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
                 />
                 <div className="absolute top-3 right-3">
                   <span className="bg-[#1e3a5f] text-white px-3 py-1 rounded-full text-sm">
@@ -73,7 +74,8 @@ export function Portfolio() {
               const element = document.getElementById('schedule');
               if (element) element.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="text-[#1e3a5f] hover:underline"
+            className="text-[#1e3a5f] hover:underline focus:outline-none focus:ring-2 focus:ring-[#4fc3dc] focus:ring-offset-2 rounded px-2 py-1"
+            aria-label="Navigate to schedule service section"
           >
             Schedule your installation or service today →
           </button>

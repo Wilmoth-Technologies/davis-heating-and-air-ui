@@ -11,11 +11,13 @@ export default function App() {
   return (
     <div className="min-h-screen">
       <Header />
-      <HeroTrust />
-      <Services />
-      <Portfolio />
-      <Brands />
-      <ScheduleContact />
+      <main id="main-content" tabIndex={-1}>
+        <HeroTrust />
+        <Services />
+        <Portfolio />
+        <Brands />
+        <ScheduleContact />
+      </main>
       <Footer />
       <Toaster />
     </div>

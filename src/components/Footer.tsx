@@ -3,17 +3,17 @@ import logo from '../assets/davisHeatingAndAir.png';
 
 export function Footer() {
   return (
-    <footer className="bg-[#1e3a5f] text-white">
+    <footer className="bg-[#1e3a5f] text-white" role="contentinfo">
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div className="md:col-span-2">
-            <img src={logo} alt="Davis Heating + Air" className="h-16 w-auto mb-4" />
+            <img src={logo} alt="Davis Heating + Air logo" className="h-16 w-auto mb-4" />
             <p className="text-white/80 mb-4 max-w-md">
               Professional HVAC services for Northwest North Carolina. Let's make HVAC great again!
             </p>
             <div className="flex items-center gap-2 text-[#4fc3dc] mb-4">
-              <Phone className="h-5 w-5" />
-              <a href="tel:336-374-6656" className="hover:underline">
+              <Phone className="h-5 w-5" aria-hidden="true" />
+              <a href="tel:336-374-6656" className="hover:underline focus:outline-none focus:ring-2 focus:ring-[#4fc3dc] focus:ring-offset-2 rounded px-1" aria-label="Call us at (336) 374-6656">
                 (336) 374-6656
               </a>
             </div>
@@ -59,7 +59,8 @@ export function Footer() {
               <li>
                 <button 
                   onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#4fc3dc] focus:ring-offset-2 rounded px-1"
+                  aria-label="Navigate to services section"
                 >
                   New Installations
                 </button>

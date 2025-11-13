@@ -15,26 +15,44 @@ export function Header() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm" role="banner">
       <div className="container mx-auto px-4 py-4">
         <div className="hidden md:flex items-center justify-between relative">
           {/* Left: Logo */}
           <div className="flex items-center gap-3">
-            <img src={logo} alt="Davis Heating + Air" className="h-12 w-auto" />
+            <a href="#main-content" aria-label="Davis Heating + Air - Go to main content">
+              <img src={logo} alt="Davis Heating + Air logo" className="h-12 w-auto" />
+            </a>
           </div>
 
           {/* Center: Navigation (Absolutely Positioned) */}
-          <nav className="absolute left-1/2 -translate-x-1/2 flex items-center gap-6">
-            <button onClick={() => scrollToSection('services')} className="hover:text-[#1e3a5f] transition-colors">
+          <nav className="absolute left-1/2 -translate-x-1/2 flex items-center gap-6" aria-label="Main navigation">
+            <button 
+              onClick={() => scrollToSection('services')} 
+              className="hover:text-[#1e3a5f] transition-colors focus:outline-none focus:ring-2 focus:ring-[#4fc3dc] focus:ring-offset-2 rounded px-2 py-1"
+              aria-label="Navigate to Services section"
+            >
               Services
             </button>
-            <button onClick={() => scrollToSection('portfolio')} className="hover:text-[#1e3a5f] transition-colors">
+            <button 
+              onClick={() => scrollToSection('portfolio')} 
+              className="hover:text-[#1e3a5f] transition-colors focus:outline-none focus:ring-2 focus:ring-[#4fc3dc] focus:ring-offset-2 rounded px-2 py-1"
+              aria-label="Navigate to Our Work section"
+            >
               Our Work
             </button>
-            <button onClick={() => scrollToSection('brands')} className="hover:text-[#1e3a5f] transition-colors">
+            <button 
+              onClick={() => scrollToSection('brands')} 
+              className="hover:text-[#1e3a5f] transition-colors focus:outline-none focus:ring-2 focus:ring-[#4fc3dc] focus:ring-offset-2 rounded px-2 py-1"
+              aria-label="Navigate to Brands section"
+            >
               Brands
             </button>
-            <button onClick={() => scrollToSection('contact')} className="hover:text-[#1e3a5f] transition-colors">
+            <button 
+              onClick={() => scrollToSection('contact')} 
+              className="hover:text-[#1e3a5f] transition-colors focus:outline-none focus:ring-2 focus:ring-[#4fc3dc] focus:ring-offset-2 rounded px-2 py-1"
+              aria-label="Navigate to Contact section"
+            >
               Contact
             </button>
           </nav>
@@ -76,11 +94,15 @@ export function Header() {
               </a>
             </div>
             <div className="w-px h-8 bg-gray-300"></div>
-            <a href="tel:336-374-6656" className="flex items-center gap-2 text-[#1e3a5f] whitespace-nowrap">
-              <Phone className="h-5 w-5 flex-shrink-0" />
+            <a href="tel:336-374-6656" className="flex items-center gap-2 text-[#1e3a5f] whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-[#4fc3dc] focus:ring-offset-2 rounded px-2 py-1" aria-label="Call us at (336) 374-6656">
+              <Phone className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
               <span>(336) 374-6656</span>
             </a>
-            <Button onClick={() => scrollToSection('schedule')} className="bg-[#1e3a5f] hover:bg-[#2d5280] whitespace-nowrap">
+            <Button 
+              onClick={() => scrollToSection('schedule')} 
+              className="bg-[#1e3a5f] hover:bg-[#2d5280] whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-[#4fc3dc] focus:ring-offset-2"
+              aria-label="Schedule a service appointment"
+            >
               Schedule Service
             </Button>
           </div>
@@ -95,26 +117,49 @@ export function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2"
+            className="p-2 focus:outline-none focus:ring-2 focus:ring-[#4fc3dc] focus:ring-offset-2 rounded"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
           >
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {mobileMenuOpen ? <X className="h-6 w-6" aria-hidden="true" /> : <Menu className="h-6 w-6" aria-hidden="true" />}
           </button>
         </div>
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 border-t pt-4">
-            <nav className="flex flex-col gap-4">
-              <button onClick={() => scrollToSection('services')} className="text-left hover:text-[#1e3a5f] transition-colors">
+          <div id="mobile-menu" className="md:hidden mt-4 pb-4 border-t pt-4" role="menu">
+            <nav className="flex flex-col gap-4" aria-label="Mobile navigation">
+              <button 
+                onClick={() => scrollToSection('services')} 
+                className="text-left hover:text-[#1e3a5f] transition-colors focus:outline-none focus:ring-2 focus:ring-[#4fc3dc] focus:ring-offset-2 rounded px-2 py-1"
+                role="menuitem"
+                aria-label="Navigate to Services section"
+              >
                 Services
               </button>
-              <button onClick={() => scrollToSection('areas')} className="text-left hover:text-[#1e3a5f] transition-colors">
+              <button 
+                onClick={() => scrollToSection('areas')} 
+                className="text-left hover:text-[#1e3a5f] transition-colors focus:outline-none focus:ring-2 focus:ring-[#4fc3dc] focus:ring-offset-2 rounded px-2 py-1"
+                role="menuitem"
+                aria-label="Navigate to Service Areas section"
+              >
                 Service Areas
               </button>
-              <button onClick={() => scrollToSection('brands')} className="text-left hover:text-[#1e3a5f] transition-colors">
+              <button 
+                onClick={() => scrollToSection('brands')} 
+                className="text-left hover:text-[#1e3a5f] transition-colors focus:outline-none focus:ring-2 focus:ring-[#4fc3dc] focus:ring-offset-2 rounded px-2 py-1"
+                role="menuitem"
+                aria-label="Navigate to Brands section"
+              >
                 Brands
               </button>
-              <button onClick={() => scrollToSection('contact')} className="text-left hover:text-[#1e3a5f] transition-colors">
+              <button 
+                onClick={() => scrollToSection('contact')} 
+                className="text-left hover:text-[#1e3a5f] transition-colors focus:outline-none focus:ring-2 focus:ring-[#4fc3dc] focus:ring-offset-2 rounded px-2 py-1"
+                role="menuitem"
+                aria-label="Navigate to Contact section"
+              >
                 Contact
               </button>
               <div className="flex items-center gap-2 pt-2 border-t">
@@ -152,11 +197,15 @@ export function Header() {
                   </svg>
                 </a>
               </div>
-              <a href="tel:336-374-6656" className="flex items-center gap-2 text-[#1e3a5f]">
-                <Phone className="h-5 w-5" />
+              <a href="tel:336-374-6656" className="flex items-center gap-2 text-[#1e3a5f] focus:outline-none focus:ring-2 focus:ring-[#4fc3dc] focus:ring-offset-2 rounded px-2 py-1" aria-label="Call us at (336) 374-6656">
+                <Phone className="h-5 w-5" aria-hidden="true" />
                 <span>(336) 374-6656</span>
               </a>
-              <Button onClick={() => scrollToSection('schedule')} className="bg-[#1e3a5f] hover:bg-[#2d5280] w-full">
+              <Button 
+                onClick={() => scrollToSection('schedule')} 
+                className="bg-[#1e3a5f] hover:bg-[#2d5280] w-full focus:outline-none focus:ring-2 focus:ring-[#4fc3dc] focus:ring-offset-2"
+                aria-label="Schedule a service appointment"
+              >
                 Schedule Service
               </Button>
             </nav>

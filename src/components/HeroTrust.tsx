@@ -75,31 +75,31 @@ const trustFactors = [
 
 const testimonials = [
   {
-    name: "Sarah Johnson",
+    name: "Alex Bell",
     location: "Surry County, NC",
     rating: 5,
-    text: "Davis Heating + Air replaced our old HVAC system with a new Friedrich unit. The installation was professional, quick, and our energy bills have dropped significantly. Highly recommend!",
-    service: "Installation",
+    text: "Brad is as thorough as they come in the service industry. If he does not get something right, he will see it through until it is completed. Reasonably priced work and trustworthy. Hard to come by HVAC people like Brad. I would HIGHLY recommend him and his crew!",
+    service: "Service",
   },
   {
-    name: "Mike Thompson",
-    location: "Greensboro, NC",
+    name: "Deanna Edmonds",
+    location: "Dobson, NC",
     rating: 5,
-    text: "When our AC went out in the middle of summer, they came the same day and had us up and running in no time. Excellent service and fair pricing. These guys know their stuff!",
+    text: "Brad went above and beyond to ensure everything was working perfectly. We have been pleased with the service and professionalism.",
     service: "Emergency Repair",
   },
   {
-    name: "Linda Martinez",
+    name: "Amy Jessup",
     location: "Forsyth County, NC",
     rating: 5,
-    text: "We've been on their maintenance plan for 3 years now. Our system runs perfectly, and we haven't had a single breakdown. The peace of mind is worth every penny.",
-    service: "Maintenance Plan",
+    text: "Excellent service! Very thorough and professional- always willing to make a house call at your convenience.",
+    service: "Emergency Repair",
   },
   {
     name: "Robert Davis",
     location: "Yadkin County, NC",
     rating: 5,
-    text: "Professional, courteous, and knowledgeable. They took the time to explain everything and made sure we understood all our options. Best HVAC company in the area!",
+    text: "Amazing work! Highly recommend!",
     service: "Installation",
   },
 ];
@@ -161,7 +161,7 @@ export function HeroTrust() {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto">
             <p className="mb-4 text-[#1e3a5f] text-lg md:text-xl" role="text">
-              Let's make HVAC great again!
+              Stay cool, stay cozy!
             </p>
 
             <h1 id="main-headline" className="mb-4 text-[#1e3a5f]">

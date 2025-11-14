@@ -308,8 +308,8 @@ export function ScheduleContact() {
                   <Mail className="h-5 w-5 text-[#4fc3dc] flex-shrink-0 mt-1" />
                   <div>
                     <div className="text-sm text-white/80">Email</div>
-                    <a href="mailto:info@davisheatingair.com" className="hover:text-[#4fc3dc] transition-colors">
-                      info@davisheatingair.com
+                    <a href="mailto:info@staycoolstaycozy.com" className="hover:text-[#4fc3dc] transition-colors">
+                      info@staycoolstaycozy.com
                     </a>
                   </div>
                 </div>
@@ -326,7 +326,7 @@ export function ScheduleContact() {
                   <Clock className="h-5 w-5 text-[#4fc3dc] flex-shrink-0 mt-1" />
                   <div>
                     <div className="text-sm text-white/80">Hours</div>
-                    <div>Mon-Fri: 8am - 6pm</div>
+                    <div>Mon-Fri: 8am - 5pm</div>
                     <div>Sat: 9am - 3pm</div>
                     <div className="text-[#ff6b5a] mt-1">24/7 Emergency Service</div>
                   </div>

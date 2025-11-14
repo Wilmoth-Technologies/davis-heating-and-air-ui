@@ -9,7 +9,7 @@ export function Footer() {
           <div className="md:col-span-2">
             <img src={logo} alt="Davis Heating + Air logo" className="h-16 w-auto mb-4" />
             <p className="text-white/80 mb-4 max-w-md">
-              Professional HVAC services for Northwest North Carolina. Let's make HVAC great again!
+              Professional HVAC services for Northwest North Carolina. Stay cool, stay cozy!
             </p>
             <div className="flex items-center gap-2 text-[#4fc3dc] mb-4">
               <Phone className="h-5 w-5" aria-hidden="true" />
@@ -103,8 +103,8 @@ export function Footer() {
               </li>
               <li className="flex items-start gap-2">
                 <Mail className="h-5 w-5 flex-shrink-0 mt-0.5" />
-                <a href="mailto:info@davisheatingair.com" className="hover:text-white transition-colors">
-                  info@davisheatingair.com
+                <a href="mailto:info@staycoolstaycozy.com" className="hover:text-white transition-colors">
+                  info@staycoolstaycozy.com
                 </a>
               </li>
               <li className="flex items-start gap-2">

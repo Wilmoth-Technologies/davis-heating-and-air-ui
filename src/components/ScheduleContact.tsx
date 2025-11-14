@@ -7,6 +7,7 @@ import { Button } from './ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Calendar, Mail, Phone, MapPin, Clock } from 'lucide-react';
 import { toast } from 'sonner';
+import { submitAppointmentForm, submitContactForm } from '../services/api';
 
 export function ScheduleContact() {
   const [scheduleForm, setScheduleForm] = useState({
@@ -43,6 +44,9 @@ export function ScheduleContact() {
     phone: ''
   });
 
+  const [isSubmittingSchedule, setIsSubmittingSchedule] = useState(false);
+  const [isSubmittingContact, setIsSubmittingContact] = useState(false);
+
   // Validation functions
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -56,7 +60,7 @@ export function ScheduleContact() {
     return digitsOnly.length === 10;
   };
 
-  const handleScheduleSubmit = (e: React.FormEvent) => {
+  const handleScheduleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Reset errors
@@ -118,29 +122,70 @@ export function ScheduleContact() {
     }
 
     // If validation passes, submit the form
-    toast.success('Service request received! We\'ll contact you shortly to confirm your appointment.');
-    setScheduleForm({
-      name: '',
-      email: '',
-      phone: '',
-      service: '',
-      date: '',
-      time: '',
-      address: '',
-      message: ''
-    });
-    setScheduleErrors({
-      email: '',
-      phone: '',
-      service: '',
-      date: '',
-      time: '',
-      address: '',
-      message: ''
-    });
+    setIsSubmittingSchedule(true);
+
+    try {
+      // Format date from yyyy-mm-dd to mm/dd/yyyy
+      const formatDate = (dateString: string): string => {
+        if (!dateString) return '';
+        const date = new Date(dateString + 'T00:00:00'); // Add time to avoid timezone issues
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${month}/${day}/${year}`;
+      };
+
+      // Map time values to full descriptions
+      const timeMap: Record<string, string> = {
+        'morning': 'Morning (8am - 12pm)',
+        'afternoon': 'Afternoon (12pm - 4pm)',
+        'evening': 'Evening (4pm - 7pm)',
+        'flexible': 'Flexible'
+      };
+
+      // Map form data to API format
+      const apiData = {
+        name: scheduleForm.name,
+        email: scheduleForm.email,
+        phoneNumber: scheduleForm.phone,
+        serviceType: scheduleForm.service,
+        preferredDate: formatDate(scheduleForm.date),
+        time: timeMap[scheduleForm.time] || scheduleForm.time,
+        address: scheduleForm.address,
+        details: scheduleForm.message
+      };
+
+      await submitAppointmentForm(apiData);
+      
+      toast.success('Service request received! We\'ll contact you shortly to confirm your appointment.');
+      setScheduleForm({
+        name: '',
+        email: '',
+        phone: '',
+        service: '',
+        date: '',
+        time: '',
+        address: '',
+        message: ''
+      });
+      setScheduleErrors({
+        email: '',
+        phone: '',
+        service: '',
+        date: '',
+        time: '',
+        address: '',
+        message: ''
+      });
+    } catch (error) {
+      console.error('Error submitting appointment:', error);
+      toast.error('Failed to submit your request. Please try again or call us at (336) 374-6656.');
+    } finally {
+      setIsSubmittingSchedule(false);
+    }
   };
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Reset errors
@@ -171,18 +216,38 @@ export function ScheduleContact() {
     }
 
     // If validation passes, submit the form
-    toast.success('Thank you for contacting us! We\'ll get back to you soon.');
-    setContactForm({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: ''
-    });
-    setContactErrors({
-      email: '',
-      phone: ''
-    });
+    setIsSubmittingContact(true);
+
+    try {
+      // Map form data to API format
+      const apiData = {
+        name: contactForm.name,
+        email: contactForm.email,
+        phoneNumber: contactForm.phone,
+        subject: contactForm.subject,
+        description: contactForm.message
+      };
+
+      await submitContactForm(apiData);
+      
+      toast.success('Thank you for contacting us! We\'ll get back to you soon.');
+      setContactForm({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: ''
+      });
+      setContactErrors({
+        email: '',
+        phone: ''
+      });
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
+      toast.error('Failed to send your message. Please try again or call us at (336) 374-6656.');
+    } finally {
+      setIsSubmittingContact(false);
+    }
   };
 
   return (
@@ -401,8 +466,13 @@ export function ScheduleContact() {
                     )}
                 </div>
 
-                <Button type="submit" className="w-full bg-[#1e3a5f] hover:bg-[#2d5280]" aria-label="Submit service appointment request">
-                  Request Appointment
+                <Button 
+                  type="submit" 
+                  className="w-full bg-[#1e3a5f] hover:bg-[#2d5280]" 
+                  aria-label="Submit service appointment request"
+                  disabled={isSubmittingSchedule}
+                >
+                  {isSubmittingSchedule ? 'Submitting...' : 'Request Appointment'}
                 </Button>
               </form>
             </CardContent>
@@ -509,8 +579,13 @@ export function ScheduleContact() {
                     />
                   </div>
 
-                  <Button type="submit" className="w-full bg-[#ff6b5a] hover:bg-[#ff5544]" aria-label="Submit contact form">
-                    Send Message
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-[#ff6b5a] hover:bg-[#ff5544]" 
+                    aria-label="Submit contact form"
+                    disabled={isSubmittingContact}
+                  >
+                    {isSubmittingContact ? 'Sending...' : 'Send Message'}
                   </Button>
                 </form>
               </CardContent>

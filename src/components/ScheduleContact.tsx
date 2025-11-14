@@ -20,6 +20,16 @@ export function ScheduleContact() {
     message: ''
   });
 
+  const [scheduleErrors, setScheduleErrors] = useState({
+    email: '',
+    phone: '',
+    service: '',
+    date: '',
+    time: '',
+    address: '',
+    message: ''
+  });
+
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
@@ -28,11 +38,98 @@ export function ScheduleContact() {
     message: ''
   });
 
+  const [contactErrors, setContactErrors] = useState({
+    email: '',
+    phone: ''
+  });
+
+  // Validation functions
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhone = (phone: string): boolean => {
+    // Remove all non-digit characters for validation
+    const digitsOnly = phone.replace(/\D/g, '');
+    // Check if it has 10 digits (US phone number format)
+    return digitsOnly.length === 10;
+  };
+
   const handleScheduleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Reset errors
+    const newErrors = {
+      email: '',
+      phone: '',
+      service: '',
+      date: '',
+      time: '',
+      address: '',
+      message: ''
+    };
+
+    let hasErrors = false;
+
+    // Validate email
+    if (!scheduleForm.email || !validateEmail(scheduleForm.email)) {
+      newErrors.email = 'Please enter a valid email address';
+      hasErrors = true;
+    }
+
+    // Validate phone
+    if (!scheduleForm.phone || !validatePhone(scheduleForm.phone)) {
+      newErrors.phone = 'Please enter a valid 10-digit phone number';
+      hasErrors = true;
+    }
+
+    // Validate required fields
+    if (!scheduleForm.service) {
+      newErrors.service = 'Please select a service type';
+      hasErrors = true;
+    }
+
+    if (!scheduleForm.date) {
+      newErrors.date = 'Please select a preferred date';
+      hasErrors = true;
+    }
+
+    if (!scheduleForm.time) {
+      newErrors.time = 'Please select a preferred time';
+      hasErrors = true;
+    }
+
+    if (!scheduleForm.address.trim()) {
+      newErrors.address = 'Please enter a service address';
+      hasErrors = true;
+    }
+
+    if (!scheduleForm.message.trim()) {
+      newErrors.message = 'Please provide additional details';
+      hasErrors = true;
+    }
+
+    setScheduleErrors(newErrors);
+
+    if (hasErrors) {
+      toast.error('Please fill in all required fields correctly');
+      return;
+    }
+
+    // If validation passes, submit the form
     toast.success('Service request received! We\'ll contact you shortly to confirm your appointment.');
     setScheduleForm({
       name: '',
+      email: '',
+      phone: '',
+      service: '',
+      date: '',
+      time: '',
+      address: '',
+      message: ''
+    });
+    setScheduleErrors({
       email: '',
       phone: '',
       service: '',
@@ -45,6 +142,35 @@ export function ScheduleContact() {
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Reset errors
+    const newErrors = {
+      email: '',
+      phone: ''
+    };
+
+    let hasErrors = false;
+
+    // Validate email
+    if (!contactForm.email || !validateEmail(contactForm.email)) {
+      newErrors.email = 'Please enter a valid email address';
+      hasErrors = true;
+    }
+
+    // Validate phone (now required)
+    if (!contactForm.phone || !validatePhone(contactForm.phone)) {
+      newErrors.phone = 'Please enter a valid 10-digit phone number';
+      hasErrors = true;
+    }
+
+    setContactErrors(newErrors);
+
+    if (hasErrors) {
+      toast.error('Please fill in all required fields correctly');
+      return;
+    }
+
+    // If validation passes, submit the form
     toast.success('Thank you for contacting us! We\'ll get back to you soon.');
     setContactForm({
       name: '',
@@ -52,6 +178,10 @@ export function ScheduleContact() {
       phone: '',
       subject: '',
       message: ''
+    });
+    setContactErrors({
+      email: '',
+      phone: ''
     });
   };
 
@@ -100,11 +230,20 @@ export function ScheduleContact() {
                       type="tel"
                       required
                       value={scheduleForm.phone}
-                      onChange={(e) => setScheduleForm({ ...scheduleForm, phone: e.target.value })}
+                      onChange={(e) => {
+                        setScheduleForm({ ...scheduleForm, phone: e.target.value });
+                        if (scheduleErrors.phone) {
+                          setScheduleErrors({ ...scheduleErrors, phone: '' });
+                        }
+                      }}
                       placeholder="(555) 123-4567"
                       aria-required="true"
                       autoComplete="tel"
+                      className={scheduleErrors.phone ? 'border-red-500' : ''}
                     />
+                    {scheduleErrors.phone && (
+                      <p className="text-sm text-red-500 mt-1">{scheduleErrors.phone}</p>
+                    )}
                   </div>
                 </div>
 
@@ -115,21 +254,40 @@ export function ScheduleContact() {
                       type="email"
                       required
                       value={scheduleForm.email}
-                      onChange={(e) => setScheduleForm({ ...scheduleForm, email: e.target.value })}
+                      onChange={(e) => {
+                        setScheduleForm({ ...scheduleForm, email: e.target.value });
+                        if (scheduleErrors.email) {
+                          setScheduleErrors({ ...scheduleErrors, email: '' });
+                        }
+                      }}
                       placeholder="your@email.com"
                       aria-required="true"
                       autoComplete="email"
+                      className={scheduleErrors.email ? 'border-red-500' : ''}
                     />
+                    {scheduleErrors.email && (
+                      <p className="text-sm text-red-500 mt-1">{scheduleErrors.email}</p>
+                    )}
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="schedule-service">Service Type *</Label>
                   <Select
                     value={scheduleForm.service}
-                    onValueChange={(value) => setScheduleForm({ ...scheduleForm, service: value })}
+                    onValueChange={(value: string) => {
+                      setScheduleForm({ ...scheduleForm, service: value });
+                      if (scheduleErrors.service) {
+                        setScheduleErrors({ ...scheduleErrors, service: '' });
+                      }
+                    }}
                     required
                   >
-                    <SelectTrigger id="schedule-service" aria-required="true" aria-label="Select service type">
+                    <SelectTrigger 
+                      id="schedule-service" 
+                      aria-required="true" 
+                      aria-label="Select service type"
+                      className={scheduleErrors.service ? 'border-red-500' : ''}
+                    >
                       <SelectValue placeholder="Select a service" />
                     </SelectTrigger>
                     <SelectContent>
@@ -140,25 +298,50 @@ export function ScheduleContact() {
                       <SelectItem value="consultation">Consultation</SelectItem>
                     </SelectContent>
                   </Select>
+                  {scheduleErrors.service && (
+                    <p className="text-sm text-red-500 mt-1">{scheduleErrors.service}</p>
+                  )}
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="schedule-date">Preferred Date</Label>
+                    <Label htmlFor="schedule-date">Preferred Date *</Label>
                     <Input
                       id="schedule-date"
                       type="date"
+                      required
                       value={scheduleForm.date}
-                      onChange={(e) => setScheduleForm({ ...scheduleForm, date: e.target.value })}
+                      onChange={(e) => {
+                        setScheduleForm({ ...scheduleForm, date: e.target.value });
+                        if (scheduleErrors.date) {
+                          setScheduleErrors({ ...scheduleErrors, date: '' });
+                        }
+                      }}
+                      className={scheduleErrors.date ? 'border-red-500' : ''}
+                      aria-required="true"
                     />
+                    {scheduleErrors.date && (
+                      <p className="text-sm text-red-500 mt-1">{scheduleErrors.date}</p>
+                    )}
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="schedule-time">Preferred Time</Label>
+                    <Label htmlFor="schedule-time">Preferred Time *</Label>
                     <Select
                       value={scheduleForm.time}
-                      onValueChange={(value) => setScheduleForm({ ...scheduleForm, time: value })}
+                      onValueChange={(value: string) => {
+                        setScheduleForm({ ...scheduleForm, time: value });
+                        if (scheduleErrors.time) {
+                          setScheduleErrors({ ...scheduleErrors, time: '' });
+                        }
+                      }}
+                      required
                     >
-                    <SelectTrigger id="schedule-time" aria-label="Select preferred time">
+                    <SelectTrigger 
+                      id="schedule-time" 
+                      aria-label="Select preferred time"
+                      aria-required="true"
+                      className={scheduleErrors.time ? 'border-red-500' : ''}
+                    >
                       <SelectValue placeholder="Select time" />
                     </SelectTrigger>
                       <SelectContent>
@@ -168,29 +351,54 @@ export function ScheduleContact() {
                         <SelectItem value="flexible">Flexible</SelectItem>
                       </SelectContent>
                     </Select>
+                    {scheduleErrors.time && (
+                      <p className="text-sm text-red-500 mt-1">{scheduleErrors.time}</p>
+                    )}
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="schedule-address">Service Address</Label>
+                  <Label htmlFor="schedule-address">Service Address *</Label>
                   <Input
                     id="schedule-address"
+                    required
                     value={scheduleForm.address}
-                    onChange={(e) => setScheduleForm({ ...scheduleForm, address: e.target.value })}
+                    onChange={(e) => {
+                      setScheduleForm({ ...scheduleForm, address: e.target.value });
+                      if (scheduleErrors.address) {
+                        setScheduleErrors({ ...scheduleErrors, address: '' });
+                      }
+                    }}
                     placeholder="123 Main St, City, NC"
+                    aria-required="true"
+                    className={scheduleErrors.address ? 'border-red-500' : ''}
                   />
+                  {scheduleErrors.address && (
+                    <p className="text-sm text-red-500 mt-1">{scheduleErrors.address}</p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="schedule-message">Additional Details</Label>
+                  <Label htmlFor="schedule-message">Additional Details *</Label>
                     <Textarea
                       id="schedule-message"
+                      required
                       value={scheduleForm.message}
-                      onChange={(e) => setScheduleForm({ ...scheduleForm, message: e.target.value })}
+                      onChange={(e) => {
+                        setScheduleForm({ ...scheduleForm, message: e.target.value });
+                        if (scheduleErrors.message) {
+                          setScheduleErrors({ ...scheduleErrors, message: '' });
+                        }
+                      }}
                       placeholder="Tell us more about what you need..."
                       rows={3}
                       aria-label="Additional details about your service request"
+                      aria-required="true"
+                      className={scheduleErrors.message ? 'border-red-500' : ''}
                     />
+                    {scheduleErrors.message && (
+                      <p className="text-sm text-red-500 mt-1">{scheduleErrors.message}</p>
+                    )}
                 </div>
 
                 <Button type="submit" className="w-full bg-[#1e3a5f] hover:bg-[#2d5280]" aria-label="Submit service appointment request">
@@ -236,22 +444,42 @@ export function ScheduleContact() {
                         type="email"
                         required
                         value={contactForm.email}
-                        onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+                        onChange={(e) => {
+                          setContactForm({ ...contactForm, email: e.target.value });
+                          if (contactErrors.email) {
+                            setContactErrors({ ...contactErrors, email: '' });
+                          }
+                        }}
                         placeholder="your@email.com"
                         aria-required="true"
                         autoComplete="email"
+                        className={contactErrors.email ? 'border-red-500' : ''}
                       />
+                      {contactErrors.email && (
+                        <p className="text-sm text-red-500 mt-1">{contactErrors.email}</p>
+                      )}
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="contact-phone">Phone</Label>
+                      <Label htmlFor="contact-phone">Phone *</Label>
                       <Input
                         id="contact-phone"
                         type="tel"
+                        required
                         value={contactForm.phone}
-                        onChange={(e) => setContactForm({ ...contactForm, phone: e.target.value })}
+                        onChange={(e) => {
+                          setContactForm({ ...contactForm, phone: e.target.value });
+                          if (contactErrors.phone) {
+                            setContactErrors({ ...contactErrors, phone: '' });
+                          }
+                        }}
                         placeholder="(555) 123-4567"
+                        aria-required="true"
                         autoComplete="tel"
+                        className={contactErrors.phone ? 'border-red-500' : ''}
                       />
+                      {contactErrors.phone && (
+                        <p className="text-sm text-red-500 mt-1">{contactErrors.phone}</p>
+                      )}
                     </div>
                   </div>
 

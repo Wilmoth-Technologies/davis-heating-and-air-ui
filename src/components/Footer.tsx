@@ -59,7 +59,7 @@ export function Footer() {
               <li>
                 <button 
                   onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#4fc3dc] focus:ring-offset-2 rounded px-1"
+                  className="hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#4fc3dc] focus:ring-offset-2 rounded"
                   aria-label="Navigate to services section"
                 >
                   New Installations
@@ -125,6 +125,18 @@ export function Footer() {
               <span>•</span>
               <span>24/7 Emergency Service</span>
             </div>
+            <p className="text-white/60 text-xs">
+              Website Built & Maintained - ©{' '}
+              <a 
+                href="https://wilmothtechnologyservices.com/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-[#4fc3dc] hover:text-white hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-[#4fc3dc] focus:ring-offset-2 focus:ring-offset-[#1e3a5f] rounded px-1"
+                aria-label="Visit Wilmoth Technology Services website"
+              >
+                Wilmoth Technology Services LLC
+              </a>
+            </p>
           </div>
         </div>
       </div>

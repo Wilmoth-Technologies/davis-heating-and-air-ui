@@ -17,7 +17,7 @@ export function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm" role="banner">
       <div className="container mx-auto px-4 py-4">
-        <div className="hidden md:flex items-center justify-between relative">
+        <div className="hidden 2xl:flex items-center justify-between relative">
           {/* Left: Logo */}
           <div className="flex items-center gap-3">
             <a href="#main-content" aria-label="Davis Heating + Air - Go to main content">
@@ -109,7 +109,7 @@ export function Header() {
         </div>
 
         {/* Mobile Header */}
-        <div className="md:hidden flex items-center justify-between">
+        <div className="2xl:hidden flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img src={logo} alt="Davis Heating + Air" className="h-12 w-auto" />
           </div>
@@ -128,7 +128,7 @@ export function Header() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div id="mobile-menu" className="md:hidden mt-4 pb-4 border-t pt-4" role="menu">
+          <div id="mobile-menu" className="2xl:hidden mt-4 pb-4 border-t pt-4" role="menu">
             <nav className="flex flex-col gap-4" aria-label="Mobile navigation">
               <button 
                 onClick={() => scrollToSection('services')} 

@@ -62,5 +62,24 @@ export default defineConfig({
     removeVersionSpecifiers(), 
     ...(produceSingleFile ? [viteSingleFile()] : [])
   ],
+  build: {
+    // Optimize chunk splitting for better performance
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom'],
+          'vendor-ui': ['lucide-react'],
+        },
+      },
+    },
+    // Enable minification
+    minify: 'esbuild',
+    // Optimize asset inlining threshold
+    assetsInlineLimit: 4096,
+  },
+  // Optimize dependencies
+  optimizeDeps: {
+    include: ['react', 'react-dom'],
+  },
 })
 

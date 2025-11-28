@@ -1,6 +1,16 @@
 @import "tailwindcss";
 @import "./styles/globals.css";
 
+/* Performance optimizations */
+img {
+  content-visibility: auto;
+}
+
+/* Optimize animations for performance */
+* {
+  will-change: auto;
+}
+
 /* Skip to main content link for accessibility */
 .skip-to-main-content {
   position: absolute;

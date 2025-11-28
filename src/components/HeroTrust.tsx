@@ -148,6 +148,8 @@ export function HeroTrust() {
                 alt={`Professional HVAC installation by Davis Heating + Air - ${index === 0 ? 'Gree indoor air handler installation' : index === 1 ? 'Gree outdoor dual fan system installation' : 'Indoor component installation'}`}
                 className="max-w-full max-h-full w-auto h-auto object-contain"
                 loading={index === 0 ? "eager" : "lazy"}
+                fetchPriority={index === 0 ? "high" : "auto"}
+                decoding={index === 0 ? "sync" : "async"}
               />
             </div>
           ))}

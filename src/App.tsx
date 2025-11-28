@@ -1,11 +1,14 @@
+import { lazy, Suspense } from 'react';
 import { Header } from './components/Header';
 import { HeroTrust } from './components/HeroTrust';
 import { Services } from './components/Services';
-import { Portfolio } from './components/Portfolio';
-import { Brands } from './components/Brands';
-import { ScheduleContact } from './components/ScheduleContact';
-import { Footer } from './components/Footer';
 import { Toaster } from './components/ui/sonner';
+
+// Lazy load below-the-fold components for better initial performance
+const Portfolio = lazy(() => import('./components/Portfolio').then(m => ({ default: m.Portfolio })));
+const Brands = lazy(() => import('./components/Brands').then(m => ({ default: m.Brands })));
+const ScheduleContact = lazy(() => import('./components/ScheduleContact').then(m => ({ default: m.ScheduleContact })));
+const Footer = lazy(() => import('./components/Footer').then(m => ({ default: m.Footer })));
 
 export default function App() {
   return (
@@ -14,11 +17,15 @@ export default function App() {
       <main id="main-content" tabIndex={-1}>
         <HeroTrust />
         <Services />
-        <Portfolio />
-        <Brands />
-        <ScheduleContact />
+        <Suspense fallback={null}>
+          <Portfolio />
+          <Brands />
+          <ScheduleContact />
+        </Suspense>
       </main>
-      <Footer />
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
       <Toaster />
     </div>
   );

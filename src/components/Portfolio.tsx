@@ -1,8 +1,8 @@
 import { Card, CardContent } from './ui/card';
 import { CheckCircle } from 'lucide-react';
-import install1 from "../assets/greeOne.jpg";
-import install2 from "../assets/greeTwo.jpg";
-import install3 from "../assets/greeThree.jpg";
+import install1 from "../assets/greeOne.webp";
+import install2 from "../assets/greeTwo.webp";
+import install3 from "../assets/greeThree.webp";
 
 const projects = [
   {

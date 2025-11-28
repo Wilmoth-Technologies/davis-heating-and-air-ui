@@ -11,14 +11,12 @@ import {
   Star,
   Quote,
   CheckCircle,
-  ThumbsUp,
   TrendingUp,
   DollarSign,
 } from "lucide-react";
-import circularLogo from "figma:asset/afe5f074f5f9b43a043b0f40abb67abaadb54140.png";
-import install1 from "../assets/greeOne.jpg";
-import install2 from "../assets/greeTwo.jpg";
-import install3 from "../assets/greeThree.jpg";
+import install1 from "../assets/greeOne.webp";
+import install2 from "../assets/greeTwo.webp";
+import install3 from "../assets/greeThree.webp";
 
 const backgroundImages = [install1, install2, install3];
 
@@ -134,11 +132,11 @@ export function HeroTrust() {
     <>
       {/* Hero Photos */}
       <section className="pt-16 md:pt-20" aria-label="Hero image carousel">
-        <div className="relative h-[380px] md:h-[560px] overflow-hidden" role="img" aria-label="Professional HVAC installation images">
+        <div className="relative w-full h-[380px] md:h-[560px] bg-gray-100 overflow-hidden" role="img" aria-label="Professional HVAC installation images">
           {backgroundImages.map((image, index) => (
             <div
               key={index}
-              className={`absolute inset-0 transition-opacity duration-1000 ${
+              className={`absolute inset-0 flex items-center justify-center transition-opacity duration-1000 ${
                 index === currentImageIndex
                   ? "opacity-100"
                   : "opacity-0"
@@ -148,7 +146,7 @@ export function HeroTrust() {
               <img
                 src={image}
                 alt={`Professional HVAC installation by Davis Heating + Air - ${index === 0 ? 'Gree indoor air handler installation' : index === 1 ? 'Gree outdoor dual fan system installation' : 'Indoor component installation'}`}
-                className="w-full h-full object-cover"
+                className="max-w-full max-h-full w-auto h-auto object-contain"
                 loading={index === 0 ? "eager" : "lazy"}
               />
             </div>
@@ -157,7 +155,7 @@ export function HeroTrust() {
       </section>
 
       {/* Main Headline and CTA Section */}
-      <section className="bg-white py-8 md:py-12" aria-labelledby="main-headline">
+      <section className="bg-white py-6" aria-labelledby="main-headline">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-4xl mx-auto">
             <p className="mb-4 text-[#1e3a5f] text-lg md:text-xl" role="text">
@@ -176,7 +174,7 @@ export function HeroTrust() {
               the Piedmont Triad.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-4">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
               <Button
                 size="lg"
                 onClick={scrollToSchedule}
@@ -198,7 +196,7 @@ export function HeroTrust() {
 
             <a
               href="tel:336-374-6656"
-              className="inline-flex items-center gap-2 text-lg text-[#1e3a5f] hover:text-[#4fc3dc]"
+              className="inline-flex items-center gap-2 text-lg text-[#1e3a5f] hover:text-[#4fc3dc] pb-2"
             >
               <Phone className="h-5 w-5" />
               (336) 374-6656
